@@ -12,12 +12,12 @@ body {font-family:'Roboto',sans-serif; background:#f5f5f5; color:#333; line-heig
 /* Header */
 header {
   display:flex; justify-content:space-between; align-items:center;
-  padding:15px 40px; background:#b71c1c; color:white; position:sticky; top:0; z-index:1000;
+  padding:15px 20px; background:#b71c1c; color:white; position:sticky; top:0; z-index:1000; flex-wrap:wrap;
 }
 header .logo {display:flex; align-items:center; gap:15px;}
 header .logo img {width:60px; height:60px; border-radius:50%;}
 header .logo h1 {font-size:1.8rem;}
-nav {display:flex; gap:25px;}
+nav {display:flex; gap:20px; flex-wrap:wrap;}
 nav a {color:#f5f5f5; text-decoration:none; font-weight:500; transition:0.3s;}
 nav a:hover {color:#ffcdd2;}
 
@@ -46,9 +46,25 @@ nav a:hover {color:#ffcdd2;}
 .sidebar ul li a {text-decoration:none; color:#333;}
 .sidebar ul li a:hover {color:#b71c1c;}
 
-/* Espaço para anúncios */
-.ad-space {background:#fff; padding:10px; border-radius:8px; text-align:center; font-weight:bold; display:flex; flex-direction:column; gap:10px;}
-.ad-space img {width:100%; border-radius:8px;}
+/* Anúncios mais destacados */
+.ad-space {display:flex; flex-direction:column; gap:20px;}
+.ad-card {
+    position:relative;
+    background:#ffe6e6; 
+    border:3px solid #b71c1c; 
+    border-radius:10px; 
+    overflow:hidden;
+    cursor:pointer;
+    transition:transform 0.3s, box-shadow 0.3s;
+}
+.ad-card:hover {transform:scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
+.ad-card img {width:100%; display:block; border-radius:10px;}
+.ad-label {
+    position:absolute; top:10px; left:10px; 
+    background:#b71c1c; color:white; 
+    font-weight:bold; padding:4px 8px; border-radius:5px;
+    font-size:0.9rem;
+}
 
 /* Footer */
 footer {background:#212121; color:white; padding:20px 40px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
@@ -63,7 +79,15 @@ footer a:hover {color:#b71c1c;}
 @keyframes fadeIn {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
 
 /* Responsividade */
-@media(max-width:1100px){.main-content{flex-direction:column;}.news-cards{grid-template-columns:1fr;} nav{flex-wrap:wrap; justify-content:center; gap:15px;}}
+@media(max-width:1100px){
+    .main-content{flex-direction:column;}
+    .news-cards{grid-template-columns:1fr;}
+    nav{justify-content:center; gap:15px;}
+}
+@media(max-width:768px){
+    header {justify-content:center;}
+    nav {width:100%; justify-content:center; gap:10px;}
+}
 </style>
 </head>
 <body>
@@ -93,9 +117,14 @@ footer a:hover {color:#b71c1c;}
 
     <div class="sidebar">
         <div class="ad-space" id="ad-space">
-            <p>Espaço para Anúncios</p>
-            <img src="anuncio.jpg" alt="Anúncio 1">
-            <img src="anuncio2.jpg" alt="Anúncio 2">
+            <div class="ad-card">
+                <span class="ad-label">Anúncio</span>
+                <img src="anuncio.jpg" alt="Anúncio 1">
+            </div>
+            <div class="ad-card">
+                <span class="ad-label">Anúncio</span>
+                <img src="anuncio2.jpg" alt="Anúncio 2">
+            </div>
         </div>
         <div class="categories">
             <h4>Cadernos</h4>
