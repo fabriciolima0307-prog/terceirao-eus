@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jornal do Terceirão</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family:'Roboto',sans-serif; background:#f5f5f5; color:#333; line-height:1.5;}
+
+/* HEADER */
+header {
+    display:flex; justify-content:space-between; align-items:center;
+    padding:10px 20px; background:#b71c1c; color:white; position:sticky; top:0; z-index:1000;
+}
+header .logo {display:flex; align-items:center; gap:10px;}
+header .logo img {width:40px; height:40px; border-radius:50%;}
+header .logo h1 {font-size:1.5rem;}
+nav {display:flex; gap:15px; justify-content:flex-end;}
+nav a {color:#f5f5f5; text-decoration:none; font-weight:500; transition:0.3s; font-size:1.2rem;}
+nav a:hover {color:#ffcdd2;}
+
+/* HAMBURGER MENU */
+.hamburger {
+    display:none; flex-direction:column; cursor:pointer; gap:4px;
+}
+.hamburger span {width:25px; height:3px; background:white; border-radius:2px;}
+
+/* CARROSSEL */
+.carousel {position:relative; overflow:hidden; width:100%; height:300px; margin-bottom:20px; background:#eee;}
+.carousel-track {display:flex; transition:transform 0.5s ease-in-out; height:100%;}
+.carousel-card {min-width:100%; height:100%; position:relative; cursor:pointer;}
+.carousel-card img {width:100%; height:100%; object-fit:cover;}
+.carousel-card h3 {position:absolute; bottom:60px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px;}
+.carousel-card p {position:absolute; bottom:20px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px;}
+.carousel-card .author-img {width:50px; height:50px; border-radius:50%; position:absolute; top:10px; right:10px; border:2px solid white; object-fit:cover;}
+.carousel-card.ad::after {
+    content:"ANÚNCIO"; position:absolute; top:10px; left:10px;
+    background:#b71c1c; color:white; font-weight:bold; padding:4px 8px;
+    border-radius:5px; font-size:0.9rem;
+}
+
+/* MAIN CONTENT */
+.main-content {display:flex; max-width:1400px; margin:0 auto 40px auto; gap:20px; padding:0 20px;}
+.news-cards {flex:3; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); grid-auto-rows:auto; gap:15px;}
+.news-card {background:white; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; overflow:hidden; transition:transform 0.3s; position:relative;}
+.news-card:hover {transform:translateY(-5px);}
+.news-card img {width:100%; height:200px; object-fit:cover;}
+.news-card h3 {color:#b71c1c; margin:10px; font-size:1.1rem;}
+.news-card p {color:#555; margin:0 10px 10px 10px; font-size:0.95rem;}
+.news-card .author-img {width:55px; height:55px; border-radius:50%; position:absolute; top:10px; right:10px; border:2px solid white; object-fit:cover;}
+
+/* SIDEBAR */
+.sidebar {flex:1; display:flex; flex-direction:column; gap:20px;}
+.sidebar h4 {color:#212121; margin-bottom:10px;}
+.sidebar ul {list-style:none;}
+.sidebar ul li {margin-bottom:8px;}
+.sidebar ul li a {text-decoration:none; color:#333;}
+.sidebar ul li a:hover {color:#b71c1c;}
+
+/* ANÚNCIOS */
+.ad-space {display:flex; flex-direction:column; gap:20px;}
+.ad-card {position:relative; background:#ffe6e6; border:3px solid #b71c1c; border-radius:10px; overflow:hidden; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;}
+.ad-card:hover {transform:scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
+.ad-card img {width:100%; display:block; border-radius:10px;}
+.ad-card .author-img {width:55px; height:55px; border-radius:50%; position:absolute; top:10px; right:10px; border:2px solid white; object-fit:cover;}
+.ad-label {position:absolute; top:10px; left:10px; background:#b71c1c; color:white; font-weight:bold; padding:4px 8px; border-radius:5px; font-size:0.9rem;}
+
+/* FOOTER */
+footer {background:#212121; color:white; padding:20px 40px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+footer .footer-col {flex:1; min-width:150px;}
+footer a {color:white; text-decoration:none;}
+footer a:hover {color:#b71c1c;}
+
+/* MODAL */
+.modal {display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; overflow:auto; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;}
+.modal-content {background:white; margin:20px; padding:20px; border-radius:8px; max-width:900px; width:90%; position:relative; animation:fadeIn 0.3s;}
+.close-modal {position:absolute; top:10px; right:15px; font-size:24px; font-weight:bold; color:#b71c1c; cursor:pointer;}
+#modal-author-img {width:70px; height:70px; border-radius:50%; border:2px solid #b71c1c; margin-bottom:10px; object-fit:cover;}
+@keyframes fadeIn {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+
+/* RESPONSIVIDADE */
+@media(max-width:1100px){
+    .main-content{flex-direction:column;}
+    .news-cards{grid-template-columns:1fr;}
+}
+
+@media(max-width:768px){
+    header {padding:8px 10px; flex-wrap:nowrap; justify-content:space-between; align-items:center;}
+    nav {display:none; flex-direction:column; gap:10px; background:#b71c1c; position:absolute; top:60px; right:0; width:200px; padding:10px; border-radius:5px;}
+    nav.show {display:flex;}
+    .hamburger {display:flex;}
+    nav a {font-size:1rem;}
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="jornal.jpg" alt="Logo do Jornal do Terceirão">
+        <h1>Jornal do Terceirão</h1>
+    </div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Política</a>
+        <a href="#">Esportes</a>
+        <a href="#">Tecnologia</a>
+        <a href="#">Cultura</a>
+        <a href="#">Saúde</a>
+        <a href="#">Opinião</a>
+        <a href="#">Contato</a>
+    </nav>
+    <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
+<!-- Carrossel -->
+<div class="carousel">
+    <div class="carousel-track" id="carousel-track"></div>
+</div>
+
+<div class="main-content">
+    <div class="news-cards" id="news-cards"></div>
+    <div class="sidebar">
+        <div class="ad-space" id="ad-space"></div>
+        <div class="categories">
+            <h4>Cadernos</h4>
+            <ul>
+                <li><a href="#">Política</a></li>
+                <li><a href="#">Esportes</a></li>
+                <li><a href="#">Tecnologia</a></li>
+                <li><a href="#">Cultura</a></li>
+                <li><a href="#">Saúde</a></li>
+                <li><a href="#">Opinião</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-col">
+        <h4>Sobre</h4>
+        <p>Jornal do Terceirão criado para exibir notícias de alunos.</p>
+    </div>
+    <div class="footer-col">
+        <h4>Cadernos</h4>
+        <ul>
+            <li><a href="#">Política</a></li>
+            <li><a href="#">Esportes</a></li>
+            <li><a href="#">Tecnologia</a></li>
+        </ul>
+    </div>
+    <div class="footer-col">
+        <h4>Contato</h4>
+        <p>Email: contato@jornal.com</p>
+    </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="news-modal">
+    <div class="modal-content">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <img id="modal-author-img" src="" alt="Autor">
+        <h1 id="modal-title"></h1>
+        <h3 id="modal-subtitle"></h3>
+        <img id="modal-image" src="" alt="" style="width:100%; margin:15px 0; border-radius:8px;">
+        <p id="modal-content-text"></p>
+    </div>
+</div>
+
+<script>
+// ==========================
+// MENU HAMBURGER
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.querySelector('header nav');
+hamburger.addEventListener('click',()=>{navMenu.classList.toggle('show');});
+
+// ==========================
+// NOTÍCIAS E ANÚNCIOS
+const items = [
+    {titulo:"Feira de Ciências", subtitulo:"Alunos apresentam projetos tecnológicos", conteudo:"Texto completo da feira de ciências.", imagem:"feira.jpg", autor:"autor1.jpg", destaque:true, ad:false, categoria:"Tecnologia"},
+    {titulo:"Futsal Escolar", subtitulo:"Time conquista campeonato estadual", conteudo:"Texto completo do campeonato.", imagem:"futsal.jpg", autor:"autor2.jpg", destaque:true, ad:false, categoria:"Esportes"},
+    {titulo:"Peça Teatral", subtitulo:"Alunos encenam história clássica", conteudo:"Descrição completa da peça.", imagem:"teatro.jpg", autor:"autor3.jpg", destaque:true, ad:false, categoria:"Cultura"},
+    {titulo:"Opinião: Educação", subtitulo:"Reflexão sobre ensino e cidadania", conteudo:"Texto completo da coluna de opinião.", imagem:"opinião.jpg", autor:"autor4.jpg", destaque:false, ad:false, categoria:"Opinião"},
+    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem soluções inovadoras", conteudo:"Descrição completa do Hackathon.", imagem:"hackathon.jpg", autor:"autor5.jpg", destaque:false, ad:false, categoria:"Tecnologia"},
+    {titulo:"Promoção de Livros", subtitulo:"Compre 2 e leve 3", conteudo:"Texto completo do anúncio.", imagem:"anuncio.jpg", autor:"autorAnuncio1.jpg", destaque:false, ad:true, categoria:"Publicidade"},
+    {titulo:"Curso de Inglês", subtitulo:"Matrículas abertas", conteudo:"Texto completo do anúncio.", imagem:"anuncio2.jpg", autor:"autorAnuncio2.jpg", destaque:false, ad:true, categoria:"Publicidade"}
+];
+
+// ==========================
+// FUNÇÕES PARA CARROSSEL E CARDS
+const carouselTrack = document.getElementById("carousel-track");
+const newsCardsContainer = document.getElementById("news-cards");
+const adSpaceContainer = document.getElementById("ad-space");
+
+function carregarItems() {
+    items.forEach(item=>{
+        // CARROSSEL (destaques e anúncios)
+        if(item.destaque || item.ad){
+            const carouselCard = document.createElement("div");
+            carouselCard.classList.add("carousel-card");
+            if(item.ad) carouselCard.classList.add("ad");
+            carouselCard.innerHTML=`<img src="${item.imagem}" alt="${item.titulo}">
+                                    <img class="author-img" src="${item.autor}" alt="Autor">
+                                    <h3>${item.titulo}</h3>
+                                    <p>${item.subtitulo}</p>`;
+            carouselCard.onclick=()=>abrirModal(item);
+            carouselTrack.appendChild(carouselCard);
+        }
+
+        // NEWS CARDS (notícias e opinião)
+        if(!item.ad){
+            const card = document.createElement("div");
+            card.classList.add("news-card");
+            card.innerHTML=`<img src="${item.imagem}" alt="${item.titulo}">
+                            <img class="author-img" src="${item.autor}" alt="Autor">
+                            <h3>${item.titulo}</h3>
+                            <p>${item.subtitulo}</p>`;
+            card.onclick=()=>abrirModal(item);
+            newsCardsContainer.appendChild(card);
+        }
+
+        // ANÚNCIOS na sidebar
+        if(item.ad){
+            const adCard = document.createElement("div");
+            adCard.classList.add("ad-card");
+            adCard.innerHTML=`<span class="ad-label">Anúncio</span>
+                              <img src="${item.imagem}" alt="${item.titulo}">
+                              <img class="author-img" src="${item.autor}" alt="Autor">`;
+            adCard.onclick=()=>abrirModal(item);
+            adSpaceContainer.appendChild(adCard);
+        }
+    });
+}
+
+// ==========================
+// MODAL
+const modal = document.getElementById("news-modal");
+const closeModalBtn = document.getElementById("close-modal");
+const modalTitle = document.getElementById("modal-title");
+const modalSubtitle = document.getElementById("modal-subtitle");
+const modalImage = document.getElementById("modal-image");
+const modalContentText = document.getElementById("modal-content-text");
+const modalAuthorImg = document.getElementById("modal-author-img");
+
+function abrirModal(item){
+    modalTitle.textContent = item.titulo;
+    modalSubtitle.textContent = item.subtitulo;
+    modalImage.src = item.imagem;
+    modalContentText.textContent = item.conteudo;
+    modalAuthorImg.src = item.autor?item.autor:'';
+    modal.style.display = "flex";
+}
+
+closeModalBtn.onclick = ()=>{modal.style.display="none";}
+window.onclick = (e)=>{if(e.target==modal) modal.style.display="none";}
+
+// ==========================
+// CARROSSEL AUTOMÁTICO
+let index = 0;
+function avancarCarrossel(){
+    const cards = document.querySelectorAll(".carousel-card");
+    if(cards.length===0) return;
+    index = (index+1)%cards.length;
+    carouselTrack.style.transform = `translateX(-${index*100}%)`;
+}
+setInterval(avancarCarrossel,4000);
+
+carregarItems();
+</script>
+</body>
+</html>
+
