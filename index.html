@@ -36,6 +36,7 @@ nav {
     gap:10px;
     flex-wrap:wrap;
     justify-content:flex-end;
+    width:100%;
 }
 nav a {
     color:#f5f5f5;
@@ -55,6 +56,18 @@ CARROSSEL
 .carousel-card img {width:100%; height:100%; object-fit:cover;}
 .carousel-card h3 {position:absolute; bottom:60px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px;}
 .carousel-card p {position:absolute; bottom:20px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px;}
+.carousel-card.ad::after {
+    content:"ANÚNCIO";
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:#b71c1c;
+    color:white;
+    font-weight:bold;
+    padding:4px 8px;
+    border-radius:5px;
+    font-size:0.9rem;
+}
 
 /* ======================
 MAIN CONTENT
@@ -68,7 +81,7 @@ MAIN CONTENT
 .news-card p {color:#555; margin:0 10px 10px 10px; font-size:0.95rem;}
 
 /* ======================
-SIDEBAR E ANÚNCIOS
+SIDEBAR
 ====================== */
 .sidebar {flex:1; display:flex; flex-direction:column; gap:20px;}
 .sidebar h4 {color:#212121; margin-bottom:10px;}
@@ -77,24 +90,24 @@ SIDEBAR E ANÚNCIOS
 .sidebar ul li a {text-decoration:none; color:#333;}
 .sidebar ul li a:hover {color:#b71c1c;}
 
+/* ======================
+ANÚNCIOS
+====================== */
 .ad-space {display:flex; flex-direction:column; gap:20px;}
-.ad-card {
-    position:relative;
-    background:#ffe6e6; 
-    border:3px solid #b71c1c; 
-    border-radius:10px; 
-    overflow:hidden;
-    cursor:pointer;
-    transition:transform 0.3s, box-shadow 0.3s;
-}
+.ad-card {position:relative; background:#ffe6e6; border:3px solid #b71c1c; border-radius:10px; overflow:hidden; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;}
 .ad-card:hover {transform:scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
 .ad-card img {width:100%; display:block; border-radius:10px;}
-.ad-label {
-    position:absolute; top:10px; left:10px; 
-    background:#b71c1c; color:white; 
-    font-weight:bold; padding:4px 8px; border-radius:5px;
-    font-size:0.9rem;
-}
+.ad-label {position:absolute; top:10px; left:10px; background:#b71c1c; color:white; font-weight:bold; padding:4px 8px; border-radius:5px; font-size:0.9rem;}
+
+/* ======================
+COLUNA OPINIÃO
+====================== */
+.opinion-space {display:flex; flex-direction:column; gap:15px;}
+.opinion-card {background:#fff3f3; border-left:5px solid #b71c1c; padding:10px; border-radius:5px; cursor:pointer; transition:transform 0.3s; display:flex; gap:10px; align-items:flex-start;}
+.opinion-card:hover {transform:translateY(-3px);}
+.opinion-card img {width:60px; height:60px; border-radius:5px; object-fit:cover;}
+.opinion-card h5 {color:#b71c1c; margin-bottom:5px; font-size:1rem;}
+.opinion-card p {font-size:0.9rem; color:#555;}
 
 /* ======================
 FOOTER
@@ -118,13 +131,12 @@ RESPONSIVIDADE
 @media(max-width:1100px){
     .main-content{flex-direction:column;}
     .news-cards{grid-template-columns:1fr;}
-    nav{justify-content:center; gap:15px;}
 }
 @media(max-width:768px){
-    header {justify-content:space-between; padding:8px 10px;}
-    header .logo h1 {font-size:1.1rem;}
-    header .logo img {width:40px; height:40px;}
-    nav {gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    header {flex-direction:column; align-items:flex-start; padding:8px 10px;}
+    header .logo {margin-bottom:5px;}
+    nav {display:flex; justify-content:center; gap:10px; flex-wrap:wrap; width:100%;}
+    nav a {font-size:0.9rem;}
 }
 </style>
 </head>
@@ -142,6 +154,7 @@ RESPONSIVIDADE
         <a href="#">Tecnologia</a>
         <a href="#">Cultura</a>
         <a href="#">Saúde</a>
+        <a href="#">Opinião</a>
         <a href="#">Contato</a>
     </nav>
 </header>
@@ -155,6 +168,7 @@ RESPONSIVIDADE
     <div class="news-cards" id="news-cards"></div>
 
     <div class="sidebar">
+        <!-- ANÚNCIOS -->
         <div class="ad-space" id="ad-space">
             <div class="ad-card">
                 <span class="ad-label">Anúncio</span>
@@ -165,6 +179,8 @@ RESPONSIVIDADE
                 <img src="anuncio2.jpg" alt="Anúncio 2">
             </div>
         </div>
+
+        <!-- CADERNOS -->
         <div class="categories">
             <h4>Cadernos</h4>
             <ul>
@@ -173,7 +189,28 @@ RESPONSIVIDADE
                 <li><a href="#">Tecnologia</a></li>
                 <li><a href="#">Cultura</a></li>
                 <li><a href="#">Saúde</a></li>
+                <li><a href="#">Opinião</a></li>
             </ul>
+        </div>
+
+        <!-- OPINIÃO -->
+        <div class="opinion-space" id="opinion-space">
+            <h4>Opinião</h4>
+            <!-- Exemplos de artigos de opinião -->
+            <div class="opinion-card">
+                <img src="opinião.jpg" alt="Opinião Educação">
+                <div>
+                    <h5>Editorial: Educação</h5>
+                    <p>Reflexões sobre o papel da escola na formação de cidadãos críticos.</p>
+                </div>
+            </div>
+            <div class="opinion-card">
+                <img src="opinião.jpg" alt="Opinião Esportes">
+                <div>
+                    <h5>Coluna: Esportes</h5>
+                    <p>Análise do impacto do esporte na saúde mental dos estudantes.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -210,105 +247,73 @@ RESPONSIVIDADE
 
 <script>
 // ==========================
-// ADICIONE NOVAS NOTÍCIAS AQUI
-// ==========================
+// NOTÍCIAS
 const noticias = [
     {titulo:"Feira de Ciências", subtitulo:"Alunos apresentam projetos tecnológicos", conteudo:"Texto completo da feira de ciências.", imagem:"feira.jpg", destaque:true, categoria:"Tecnologia"},
     {titulo:"Futsal Escolar", subtitulo:"Time conquista campeonato estadual", conteudo:"Texto completo do campeonato.", imagem:"futsal.jpg", destaque:true, categoria:"Esportes"},
     {titulo:"Peça Teatral", subtitulo:"Alunos encenam história clássica", conteudo:"Descrição completa da peça.", imagem:"teatro.jpg", destaque:true, categoria:"Cultura"},
-    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem aplicativos inovadores", conteudo:"Descrição completa do hackathon.", imagem:"hackathon.jpg", destaque:true, categoria:"Tecnologia"},
-    {titulo:"Saúde Mental", subtitulo:"Programa escolar auxilia estudantes", conteudo:"Texto completo sobre o programa.", imagem:"saudemental.jpg", destaque:false, categoria:"Saúde"}
+    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem soluções inovadoras", conteudo:"Descrição completa do Hackathon.", imagem:"hackathon.jpg", destaque:false, categoria:"Tecnologia"}
 ];
 
 // ==========================
-// MODAL
+// FUNÇÕES PARA CARROSSEL E CARDS
+const carouselTrack = document.getElementById("carousel-track");
+const newsCardsContainer = document.getElementById("news-cards");
+
+function carregarNoticias() {
+    noticias.forEach(noticia=>{
+        // CARROSSEL
+        if(noticia.destaque){
+            const carouselCard = document.createElement("div");
+            carouselCard.classList.add("carousel-card");
+            carouselCard.innerHTML=`<img src="${noticia.imagem}" alt="${noticia.titulo}">
+                                    <h3>${noticia.titulo}</h3>
+                                    <p>${noticia.subtitulo}</p>`;
+            carouselCard.onclick=()=>abrirModal(noticia);
+            carouselTrack.appendChild(carouselCard);
+        }
+
+        // NEWS CARDS
+        const card = document.createElement("div");
+        card.classList.add("news-card");
+        card.innerHTML=`<img src="${noticia.imagem}" alt="${noticia.titulo}">
+                        <h3>${noticia.titulo}</h3>
+                        <p>${noticia.subtitulo}</p>`;
+        card.onclick=()=>abrirModal(noticia);
+        newsCardsContainer.appendChild(card);
+    });
+}
+
 // ==========================
+// MODAL
 const modal = document.getElementById("news-modal");
+const closeModalBtn = document.getElementById("close-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalSubtitle = document.getElementById("modal-subtitle");
 const modalImage = document.getElementById("modal-image");
 const modalContentText = document.getElementById("modal-content-text");
-const closeModal = document.getElementById("close-modal");
 
-function openModal(noticia){
-    modal.style.display = "flex";
+function abrirModal(noticia){
     modalTitle.textContent = noticia.titulo;
     modalSubtitle.textContent = noticia.subtitulo;
     modalImage.src = noticia.imagem;
-    modalImage.alt = noticia.titulo;
     modalContentText.textContent = noticia.conteudo;
+    modal.style.display = "flex";
 }
-
-closeModal.addEventListener("click", () => modal.style.display="none");
-window.addEventListener("click", e => { if(e.target==modal) modal.style.display="none"; });
-
-// ==========================
-// CARROSSEL E GRID
-// ==========================
-const track = document.getElementById("carousel-track");
-const newsCards = document.getElementById("news-cards");
-
-function displayCarousel(list){
-    track.innerHTML = "";
-    list.forEach(noticia => {
-        const card = document.createElement("div");
-        card.classList.add("carousel-card");
-        card.innerHTML = `<img src="${noticia.imagem}" alt="${noticia.titulo}"><h3>${noticia.titulo}</h3><p>${noticia.subtitulo}</p>`;
-        card.addEventListener("click", () => openModal(noticia));
-        track.appendChild(card);
-    });
-}
-
-function displayNews(list){
-    newsCards.innerHTML = "";
-    list.forEach(noticia => {
-        const card = document.createElement("div");
-        card.classList.add("news-card");
-        card.innerHTML = `<img src="${noticia.imagem}" alt="${noticia.titulo}"><h3>${noticia.titulo}</h3><p>${noticia.subtitulo}</p>`;
-        card.addEventListener("click", () => openModal(noticia));
-        newsCards.appendChild(card);
-    });
-}
-
-// ==========================
-// FILTRAR NOTÍCIAS POR CATEGORIA
-// ==========================
-const menuLinks = document.querySelectorAll('header nav a');
-menuLinks.forEach(link => {
-    link.addEventListener('click', e => {
-        e.preventDefault();
-        const cat = link.textContent;
-        if(cat === "Home"){
-            displayNews(noticias);
-            displayCarousel(noticias.filter(n => n.destaque));
-        } else {
-            const filtered = noticias.filter(n => n.categoria === cat);
-            displayNews(filtered);
-            displayCarousel(filtered.filter(n => n.destaque));
-        }
-    });
-});
+closeModalBtn.onclick = ()=>{modal.style.display="none";}
+window.onclick = (e)=>{if(e.target==modal) modal.style.display="none";}
 
 // ==========================
 // CARROSSEL AUTOMÁTICO
-// ==========================
 let index = 0;
-function moveCarousel(){
-    const destaques = Array.from(track.children);
-    if(destaques.length===0) return;
-    index++;
-    if(index >= destaques.length) index=0;
-    track.style.transform = `translateX(-${index*100}%)`;
+function avancarCarrossel(){
+    const cards = document.querySelectorAll(".carousel-card");
+    index = (index+1)%cards.length;
+    carouselTrack.style.transform = `translateX(-${index*100}%)`;
 }
-setInterval(moveCarousel, 4000);
+setInterval(avancarCarrossel,4000);
 
-// ==========================
-// INICIALIZA COM TODAS NOTÍCIAS
-// ==========================
-displayNews(noticias);
-displayCarousel(noticias.filter(n => n.destaque));
+carregarNoticias();
 </script>
-
 </body>
 </html>
-
