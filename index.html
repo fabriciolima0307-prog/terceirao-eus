@@ -19,7 +19,7 @@ header .logo {display:flex; align-items:center; gap:10px;}
 header .logo img {width:40px; height:40px; border-radius:50%;}
 header .logo h1 {font-size:1.1rem;}
 nav {display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; width:100%;}
-nav a {color:#f5f5f5; text-decoration:none; font-weight:500; transition:0.3s; font-size:1.5rem;}
+nav a {color:#f5f5f5; text-decoration:none; font-weight:500; transition:0.3s; font-size:1rem;}
 nav a:hover {color:#ffcdd2;}
 
 /* CARROSSEL */
@@ -40,7 +40,7 @@ nav a:hover {color:#ffcdd2;}
 .news-cards {flex:3; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); grid-auto-rows:auto; gap:15px;}
 .news-card {background:white; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; overflow:hidden; transition:transform 0.3s;}
 .news-card:hover {transform:translateY(-5px);}
-.news-card img {width:100%; height:auto; object-fit:cover;}
+.news-card img {width:100%; height:180px; object-fit:cover;}
 .news-card h3 {color:#b71c1c; margin:10px; font-size:1.1rem;}
 .news-card p {color:#555; margin:0 10px 10px 10px; font-size:0.95rem;}
 
@@ -56,7 +56,7 @@ nav a:hover {color:#ffcdd2;}
 .ad-space {display:flex; flex-direction:column; gap:20px;}
 .ad-card {position:relative; background:#ffe6e6; border:3px solid #b71c1c; border-radius:10px; overflow:hidden; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;}
 .ad-card:hover {transform:scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
-.ad-card img {width:100%; display:block; border-radius:10px;}
+.ad-card img {width:100%; height:auto; object-fit:contain; border-radius:10px;} /* altura natural */
 .ad-label {position:absolute; top:10px; left:10px; background:#b71c1c; color:white; font-weight:bold; padding:4px 8px; border-radius:5px; font-size:0.9rem;}
 
 /* FOOTER */
@@ -112,19 +112,7 @@ footer a:hover {color:#b71c1c;}
     <div class="news-cards" id="news-cards"></div>
 
     <div class="sidebar">
-        <!-- ANÚNCIOS -->
-        <div class="ad-space" id="ad-space">
-            <div class="ad-card">
-                <span class="ad-label">Anúncio</span>
-                <img src="anuncio.jpg" alt="Anúncio 1">
-            </div>
-            <div class="ad-card">
-                <span class="ad-label">Anúncio</span>
-                <img src="anuncio2.jpg" alt="Anúncio 2">
-            </div>
-        </div>
-
-        <!-- CADERNOS -->
+        <div class="ad-space" id="ad-space"></div>
         <div class="categories">
             <h4>Cadernos</h4>
             <ul>
@@ -170,47 +158,56 @@ footer a:hover {color:#b71c1c;}
 </div>
 
 <script>
-// ==========================
-// NOTÍCIAS (incluindo Opinião)
 const noticias = [
-    {titulo:"Feira de Ciências", subtitulo:"Alunos apresentam projetos tecnológicos", conteudo:"Texto completo da feira de ciências.", imagem:"feira.jpg", destaque:true, categoria:"Tecnologia"},
-    {titulo:"Futsal Escolar", subtitulo:"Time conquista campeonato estadual", conteudo:"Texto completo do campeonato.", imagem:"futsal.jpg", destaque:true, categoria:"Esportes"},
-    {titulo:"Peça Teatral", subtitulo:"Alunos encenam história clássica", conteudo:"Descrição completa da peça.", imagem:"teatro.jpg", destaque:true, categoria:"Cultura"},
-    {titulo:"Opinião: Educação", subtitulo:"Reflexão sobre ensino e cidadania", conteudo:"Texto completo da coluna de opinião.", imagem:"opinião.jpg", destaque:false, categoria:"Opinião"},
-    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem soluções inovadoras", conteudo:"Descrição completa do Hackathon.", imagem:"hackathon.jpg", destaque:false, categoria:"Tecnologia"}
+    {titulo:"Feira de Ciências", subtitulo:"Alunos apresentam projetos tecnológicos", conteudo:"Texto completo da feira de ciências.", imagem:"feira.jpg", destaque:true, categoria:"Tecnologia", tipo:"noticia"},
+    {titulo:"Futsal Escolar", subtitulo:"Time conquista campeonato estadual", conteudo:"Texto completo do campeonato.", imagem:"futsal.jpg", destaque:true, categoria:"Esportes", tipo:"noticia"},
+    {titulo:"Peça Teatral", subtitulo:"Alunos encenam história clássica", conteudo:"Descrição completa da peça.", imagem:"teatro.jpg", destaque:true, categoria:"Cultura", tipo:"noticia"},
+    {titulo:"Opinião: Educação", subtitulo:"Reflexão sobre ensino e cidadania", conteudo:"Texto completo da coluna de opinião.", imagem:"opinião.jpg", destaque:false, categoria:"Opinião", tipo:"noticia"},
+    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem soluções inovadoras", conteudo:"Descrição completa do Hackathon.", imagem:"hackathon.jpg", destaque:false, categoria:"Tecnologia", tipo:"noticia"},
+    // Anúncios
+    {titulo:"Anúncio 1", subtitulo:"Confira a promoção imperdível!", conteudo:"Descrição do anúncio.", imagem:"anuncio.jpg", destaque:true, categoria:"Publicidade", tipo:"anuncio"},
+    {titulo:"Anúncio 2", subtitulo:"Descontos especiais para estudantes", conteudo:"Descrição do anúncio.", imagem:"anuncio2.jpg", destaque:true, categoria:"Publicidade", tipo:"anuncio"}
 ];
 
-// ==========================
-// FUNÇÕES PARA CARROSSEL E CARDS
 const carouselTrack = document.getElementById("carousel-track");
 const newsCardsContainer = document.getElementById("news-cards");
+const adSpace = document.getElementById("ad-space");
 
 function carregarNoticias() {
-    noticias.forEach(noticia=>{
-        // CARROSSEL (apenas destaques)
-        if(noticia.destaque){
-            const carouselCard = document.createElement("div");
-            carouselCard.classList.add("carousel-card");
-            carouselCard.innerHTML=`<img src="${noticia.imagem}" alt="${noticia.titulo}">
-                                    <h3>${noticia.titulo}</h3>
-                                    <p>${noticia.subtitulo}</p>`;
-            carouselCard.onclick=()=>abrirModal(noticia);
-            carouselTrack.appendChild(carouselCard);
+    noticias.forEach(item=>{
+        // Carrossel
+        if(item.destaque){
+            const card = document.createElement("div");
+            card.classList.add("carousel-card");
+            if(item.tipo==="anuncio") card.classList.add("ad");
+            card.innerHTML=`<img src="${item.imagem}" alt="${item.titulo}">
+                            <h3>${item.titulo}</h3>
+                            <p>${item.subtitulo}</p>`;
+            card.onclick=()=>abrirModal(item);
+            carouselTrack.appendChild(card);
         }
-
-        // NEWS CARDS (incluindo Opinião)
-        const card = document.createElement("div");
-        card.classList.add("news-card");
-        card.innerHTML=`<img src="${noticia.imagem}" alt="${noticia.titulo}">
-                        <h3>${noticia.titulo}</h3>
-                        <p>${noticia.subtitulo}</p>`;
-        card.onclick=()=>abrirModal(noticia);
-        newsCardsContainer.appendChild(card);
+        // News Cards (apenas notícias)
+        if(item.tipo==="noticia"){
+            const card = document.createElement("div");
+            card.classList.add("news-card");
+            card.innerHTML=`<img src="${item.imagem}" alt="${item.titulo}">
+                            <h3>${item.titulo}</h3>
+                            <p>${item.subtitulo}</p>`;
+            card.onclick=()=>abrirModal(item);
+            newsCardsContainer.appendChild(card);
+        }
+        // Anúncios na sidebar
+        if(item.tipo==="anuncio"){
+            const ad = document.createElement("div");
+            ad.classList.add("ad-card");
+            ad.innerHTML=`<span class="ad-label">Anúncio</span><img src="${item.imagem}" alt="${item.titulo}">`;
+            ad.onclick=()=>abrirModal(item);
+            adSpace.appendChild(ad);
+        }
     });
 }
 
-// ==========================
-// MODAL
+// Modal
 const modal = document.getElementById("news-modal");
 const closeModalBtn = document.getElementById("close-modal");
 const modalTitle = document.getElementById("modal-title");
@@ -218,24 +215,23 @@ const modalSubtitle = document.getElementById("modal-subtitle");
 const modalImage = document.getElementById("modal-image");
 const modalContentText = document.getElementById("modal-content-text");
 
-function abrirModal(noticia){
-    modalTitle.textContent = noticia.titulo;
-    modalSubtitle.textContent = noticia.subtitulo;
-    modalImage.src = noticia.imagem;
-    modalContentText.textContent = noticia.conteudo;
+function abrirModal(item){
+    modalTitle.textContent = item.titulo;
+    modalSubtitle.textContent = item.subtitulo;
+    modalImage.src = item.imagem;
+    modalContentText.textContent = item.conteudo;
     modal.style.display = "flex";
 }
 closeModalBtn.onclick = ()=>{modal.style.display="none";}
 window.onclick = (e)=>{if(e.target==modal) modal.style.display="none";}
 
-// ==========================
-// CARROSSEL AUTOMÁTICO
-let index = 0;
+// Carrossel automático
+let index=0;
 function avancarCarrossel(){
     const cards = document.querySelectorAll(".carousel-card");
     if(cards.length===0) return;
-    index = (index+1)%cards.length;
-    carouselTrack.style.transform = `translateX(-${index*100}%)`;
+    index=(index+1)%cards.length;
+    carouselTrack.style.transform=`translateX(-${index*100}%)`;
 }
 setInterval(avancarCarrossel,4000);
 
