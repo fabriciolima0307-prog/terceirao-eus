@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jornal do Terceirão</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family:'Roboto',sans-serif; background:#f5f5f5; color:#333; line-height:1.5;}
+
+/* ======================
+HEADER
+====================== */
+header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 15px;
+    background:#b71c1c;
+    color:white;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    flex-wrap:wrap;
+}
+header .logo {
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+header .logo img {width:40px; height:40px; border-radius:50%;}
+header .logo h1 {font-size:1.1rem;}
+nav {
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+}
+nav a {
+    color:#f5f5f5;
+    text-decoration:none;
+    font-weight:500;
+    transition:0.3s;
+    font-size:0.9rem;
+}
+nav a:hover {color:#ffcdd2;}
+
+/* ======================
+CARROSSEL
+====================== */
+.carousel {position:relative; overflow:hidden; width:100%; height:300px; margin-bottom:20px; background:#eee;}
+.carousel-track {display:flex; transition:transform 0.5s ease-in-out; height:100%;}
+.carousel-card {min-width:100%; height:100%; position:relative; cursor:pointer;}
+.carousel-card img {width:100%; height:100%; object-fit:cover;}
+.carousel-card h3 {position:absolute; bottom:60px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px;}
+.carousel-card p {position:absolute; bottom:20px; left:20px; color:white; background:rgba(0,0,0,0.5); padding:5px 10px; border-radius:5px;}
+
+/* ======================
+MAIN CONTENT
+====================== */
+.main-content {display:flex; max-width:1400px; margin:0 auto 40px auto; gap:20px; padding:0 20px;}
+.news-cards {flex:3; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); grid-auto-rows:auto; gap:15px;}
+.news-card {background:white; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; overflow:hidden; transition:transform 0.3s;}
+.news-card:hover {transform:translateY(-5px);}
+.news-card img {width:100%; height:auto; object-fit:cover;}
+.news-card h3 {color:#b71c1c; margin:10px; font-size:1.1rem;}
+.news-card p {color:#555; margin:0 10px 10px 10px; font-size:0.95rem;}
+
+/* ======================
+SIDEBAR E ANÚNCIOS
+====================== */
+.sidebar {flex:1; display:flex; flex-direction:column; gap:20px;}
+.sidebar h4 {color:#212121; margin-bottom:10px;}
+.sidebar ul {list-style:none;}
+.sidebar ul li {margin-bottom:8px;}
+.sidebar ul li a {text-decoration:none; color:#333;}
+.sidebar ul li a:hover {color:#b71c1c;}
+
+.ad-space {display:flex; flex-direction:column; gap:20px;}
+.ad-card {
+    position:relative;
+    background:#ffe6e6; 
+    border:3px solid #b71c1c; 
+    border-radius:10px; 
+    overflow:hidden;
+    cursor:pointer;
+    transition:transform 0.3s, box-shadow 0.3s;
+}
+.ad-card:hover {transform:scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
+.ad-card img {width:100%; display:block; border-radius:10px;}
+.ad-label {
+    position:absolute; top:10px; left:10px; 
+    background:#b71c1c; color:white; 
+    font-weight:bold; padding:4px 8px; border-radius:5px;
+    font-size:0.9rem;
+}
+
+/* ======================
+FOOTER
+====================== */
+footer {background:#212121; color:white; padding:20px 40px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:20px;}
+footer .footer-col {flex:1; min-width:150px;}
+footer a {color:white; text-decoration:none;}
+footer a:hover {color:#b71c1c;}
+
+/* ======================
+MODAL
+====================== */
+.modal {display:none; position:fixed; z-index:2000; left:0; top:0; width:100%; height:100%; overflow:auto; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;}
+.modal-content {background:white; margin:20px; padding:20px; border-radius:8px; max-width:900px; width:90%; position:relative; animation:fadeIn 0.3s;}
+.close-modal {position:absolute; top:10px; right:15px; font-size:24px; font-weight:bold; color:#b71c1c; cursor:pointer;}
+@keyframes fadeIn {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+
+/* ======================
+RESPONSIVIDADE
+====================== */
+@media(max-width:1100px){
+    .main-content{flex-direction:column;}
+    .news-cards{grid-template-columns:1fr;}
+    nav{justify-content:center; gap:15px;}
+}
+@media(max-width:768px){
+    header {justify-content:space-between; padding:8px 10px;}
+    header .logo h1 {font-size:1.1rem;}
+    header .logo img {width:40px; height:40px;}
+    nav {gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="jornal.jpg" alt="Logo do Jornal do Terceirão">
+        <h1>Jornal do Terceirão</h1>
+    </div>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Política</a>
+        <a href="#">Esportes</a>
+        <a href="#">Tecnologia</a>
+        <a href="#">Cultura</a>
+        <a href="#">Saúde</a>
+        <a href="#">Contato</a>
+    </nav>
+</header>
+
+<!-- Carrossel -->
+<div class="carousel">
+    <div class="carousel-track" id="carousel-track"></div>
+</div>
+
+<div class="main-content">
+    <div class="news-cards" id="news-cards"></div>
+
+    <div class="sidebar">
+        <div class="ad-space" id="ad-space">
+            <div class="ad-card">
+                <span class="ad-label">Anúncio</span>
+                <img src="anuncio.jpg" alt="Anúncio 1">
+            </div>
+            <div class="ad-card">
+                <span class="ad-label">Anúncio</span>
+                <img src="anuncio2.jpg" alt="Anúncio 2">
+            </div>
+        </div>
+        <div class="categories">
+            <h4>Cadernos</h4>
+            <ul>
+                <li><a href="#">Política</a></li>
+                <li><a href="#">Esportes</a></li>
+                <li><a href="#">Tecnologia</a></li>
+                <li><a href="#">Cultura</a></li>
+                <li><a href="#">Saúde</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-col">
+        <h4>Sobre</h4>
+        <p>Jornal do Terceirão criado para exibir notícias de alunos.</p>
+    </div>
+    <div class="footer-col">
+        <h4>Cadernos</h4>
+        <ul>
+            <li><a href="#">Política</a></li>
+            <li><a href="#">Esportes</a></li>
+            <li><a href="#">Tecnologia</a></li>
+        </ul>
+    </div>
+    <div class="footer-col">
+        <h4>Contato</h4>
+        <p>Email: contato@jornal.com</p>
+    </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal" id="news-modal">
+    <div class="modal-content">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <h1 id="modal-title"></h1>
+        <h3 id="modal-subtitle"></h3>
+        <img id="modal-image" src="" alt="" style="width:100%; margin:15px 0; border-radius:8px;">
+        <p id="modal-content-text"></p>
+    </div>
+</div>
+
+<script>
+// ==========================
+// ADICIONE NOVAS NOTÍCIAS AQUI
+// ==========================
+const noticias = [
+    {titulo:"Feira de Ciências", subtitulo:"Alunos apresentam projetos tecnológicos", conteudo:"Texto completo da feira de ciências.", imagem:"feira.jpg", destaque:true, categoria:"Tecnologia"},
+    {titulo:"Futsal Escolar", subtitulo:"Time conquista campeonato estadual", conteudo:"Texto completo do campeonato.", imagem:"futsal.jpg", destaque:true, categoria:"Esportes"},
+    {titulo:"Peça Teatral", subtitulo:"Alunos encenam história clássica", conteudo:"Descrição completa da peça.", imagem:"teatro.jpg", destaque:true, categoria:"Cultura"},
+    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem aplicativos inovadores", conteudo:"Descrição completa do hackathon.", imagem:"hackathon.jpg", destaque:true, categoria:"Tecnologia"},
+    {titulo:"Saúde Mental", subtitulo:"Programa escolar auxilia estudantes", conteudo:"Texto completo sobre o programa.", imagem:"saudemental.jpg", destaque:false, categoria:"Saúde"}
+];
+
+// ==========================
+// MODAL
+// ==========================
+const modal = document.getElementById("news-modal");
+const modalTitle = document.getElementById("modal-title");
+const modalSubtitle = document.getElementById("modal-subtitle");
+const modalImage = document.getElementById("modal-image");
+const modalContentText = document.getElementById("modal-content-text");
+const closeModal = document.getElementById("close-modal");
+
+function openModal(noticia){
+    modal.style.display = "flex";
+    modalTitle.textContent = noticia.titulo;
+    modalSubtitle.textContent = noticia.subtitulo;
+    modalImage.src = noticia.imagem;
+    modalImage.alt = noticia.titulo;
+    modalContentText.textContent = noticia.conteudo;
+}
+
+closeModal.addEventListener("click", () => modal.style.display="none");
+window.addEventListener("click", e => { if(e.target==modal) modal.style.display="none"; });
+
+// ==========================
+// CARROSSEL E GRID
+// ==========================
+const track = document.getElementById("carousel-track");
+const newsCards = document.getElementById("news-cards");
+
+function displayCarousel(list){
+    track.innerHTML = "";
+    list.forEach(noticia => {
+        const card = document.createElement("div");
+        card.classList.add("carousel-card");
+        card.innerHTML = `<img src="${noticia.imagem}" alt="${noticia.titulo}"><h3>${noticia.titulo}</h3><p>${noticia.subtitulo}</p>`;
+        card.addEventListener("click", () => openModal(noticia));
+        track.appendChild(card);
+    });
+}
+
+function displayNews(list){
+    newsCards.innerHTML = "";
+    list.forEach(noticia => {
+        const card = document.createElement("div");
+        card.classList.add("news-card");
+        card.innerHTML = `<img src="${noticia.imagem}" alt="${noticia.titulo}"><h3>${noticia.titulo}</h3><p>${noticia.subtitulo}</p>`;
+        card.addEventListener("click", () => openModal(noticia));
+        newsCards.appendChild(card);
+    });
+}
+
+// ==========================
+// FILTRAR NOTÍCIAS POR CATEGORIA
+// ==========================
+const menuLinks = document.querySelectorAll('header nav a');
+menuLinks.forEach(link => {
+    link.addEventListener('click', e => {
+        e.preventDefault();
+        const cat = link.textContent;
+        if(cat === "Home"){
+            displayNews(noticias);
+            displayCarousel(noticias.filter(n => n.destaque));
+        } else {
+            const filtered = noticias.filter(n => n.categoria === cat);
+            displayNews(filtered);
+            displayCarousel(filtered.filter(n => n.destaque));
+        }
+    });
+});
+
+// ==========================
+// CARROSSEL AUTOMÁTICO
+// ==========================
+let index = 0;
+function moveCarousel(){
+    const destaques = Array.from(track.children);
+    if(destaques.length===0) return;
+    index++;
+    if(index >= destaques.length) index=0;
+    track.style.transform = `translateX(-${index*100}%)`;
+}
+setInterval(moveCarousel, 4000);
+
+// ==========================
+// INICIALIZA COM TODAS NOTÍCIAS
+// ==========================
+displayNews(noticias);
+displayCarousel(noticias.filter(n => n.destaque));
+</script>
+
+</body>
+</html>
+
