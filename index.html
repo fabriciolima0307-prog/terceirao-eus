@@ -78,6 +78,7 @@ footer a:hover {color:#b71c1c;}
 .modal-content {background:white; margin:20px; padding:20px; border-radius:8px; max-width:900px; width:90%; position:relative; animation:fadeIn 0.3s;}
 .close-modal {position:absolute; top:10px; right:15px; font-size:24px; font-weight:bold; color:#b71c1c; cursor:pointer;}
 #modal-author-img {width:70px; height:70px; border-radius:50%; border:2px solid #b71c1c; margin-bottom:10px; object-fit:cover;}
+.modal-video {width:100%; margin:15px 0; border-radius:8px;}
 @keyframes fadeIn {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
 
 /* RESPONSIVIDADE */
@@ -169,47 +170,121 @@ footer a:hover {color:#b71c1c;}
         <h1 id="modal-title"></h1>
         <h3 id="modal-subtitle"></h3>
         <img id="modal-image" src="" alt="" style="width:100%; margin:15px 0; border-radius:8px;">
+        <div id="modal-video-container"></div>
         <p id="modal-content-text"></p>
     </div>
 </div>
 
 <script>
-// ==========================
 // MENU HAMBURGER
 const hamburger = document.getElementById('hamburger');
 const navMenu = document.querySelector('header nav');
 hamburger.addEventListener('click',()=>{navMenu.classList.toggle('show');});
 
-// ==========================
 // NOTÍCIAS E ANÚNCIOS
 const items = [
-    {titulo:"Feira de Ciências", subtitulo:"Alunos apresentam projetos tecnológicos", conteudo:"Texto completo da feira de ciências.", imagem:"feira.jpg", autor:"autor1.jpg", destaque:true, ad:false, categoria:"Tecnologia"},
-    {titulo:"Futsal Escolar", subtitulo:"Time conquista campeonato estadual", conteudo:"Texto completo do campeonato.", imagem:"futsal.jpg", autor:"autor2.jpg", destaque:true, ad:false, categoria:"Esportes"},
-    {titulo:"Peça Teatral", subtitulo:"Alunos encenam história clássica", conteudo:"Descrição completa da peça.", imagem:"teatro.jpg", autor:"autor3.jpg", destaque:true, ad:false, categoria:"Cultura"},
-    {titulo:"Opinião: Educação", subtitulo:"Reflexão sobre ensino e cidadania", conteudo:"Texto completo da coluna de opinião.", imagem:"opinião.jpg", autor:"autor4.jpg", destaque:false, ad:false, categoria:"Opinião"},
-    {titulo:"Hackathon Estudantil", subtitulo:"Alunos desenvolvem soluções inovadoras", conteudo:"Descrição completa do Hackathon.", imagem:"hackathon.jpg", autor:"autor5.jpg", destaque:false, ad:false, categoria:"Tecnologia"},
-    {titulo:"Promoção de Livros", subtitulo:"Compre 2 e leve 3", conteudo:"Texto completo do anúncio.", imagem:"anuncio.jpg", autor:"autorAnuncio1.jpg", destaque:false, ad:true, categoria:"Publicidade"},
-    {titulo:"Curso de Inglês", subtitulo:"Matrículas abertas", conteudo:"Texto completo do anúncio.", imagem:"anuncio2.jpg", autor:"autorAnuncio2.jpg", destaque:false, ad:true, categoria:"Publicidade"}
+    {
+        titulo:"Cascas de alimentos são reutilizadas para a produção de novos pratos",
+        subtitulo:"Alunas do Colégio Sete de Setembro fazem projeto sustentável",
+        conteudo:"Todo ano os estudantes são convocados a participar da Amostra Cultural, um tipo de feira de ciências, que possui um tema diferente anualmente. O escolhido de 2025 foi sustentabilidade e a equipe formada por Erika Beserra, Letícia Catarina e Ana Luísa produziram novos 'snacks' e receitas com casca de alimentos que seriam jogadas fora. A proposta tem como objetivo evitar que haja desperdício de frutas/legumes e que tudo seja reaproveitado!",
+        imagem:"erika.jpg",
+        autor:"erika.jpg",
+        destaque:true,
+        ad:false,
+        categoria:"Tecnologia"
+    },
+    {
+        titulo:"Criciúma enfrentará Volta Redonda com elenco completo na 26° rodada do Brasileirão Série B",
+        subtitulo:"O jogo ocorrerá sexta feira (12) às 19h",
+        conteudo:"O tigre, não apresenta problemas, mesmo depois de várias rodadas lidando com lesões e suspensões, o técnico Eduardo Baptista terá elenco completo à disposição. O Volta redonda jogará com o pior ataque da competição, com apenas 16 gols marcados em 25 jogos disputado. Atualmente o time carioca ocupa a 18° posição na tabela.",
+        imagem:"noticiarodrigo.jpg",
+        autor:"rodrigo.jpg",
+        destaque:true,
+        ad:false,
+        categoria:"Esportes"
+    },
+    {
+        titulo:"Aluno setembrino, de 17 anos e 10 meses, teve ataque cardíaco",
+        subtitulo:"Após receber 200 na competência 1 da redação",
+        conteudo:"De acordo com os amigos e colegas, o jovem José Lucas apresentava alto grau de vício com bebidas energéticas desde cedo. O aluno Pedro Henrique relata que, desde o início do ano, a vítima vai para o Atacadão no horário do almoço para alimentar seu vício e que nunca havia obtido uma nota tão alta. Conforme os professores, o aluno teria visto a nota enquanto o professor corrigia e teria começado a se convulsionar de forma agressiva, assim caindo em cima da mesa.",
+        imagem:"noticialucas.jpg",
+        autor:"lucas.jpg",
+        destaque:true,
+        ad:false,
+        categoria:"Saúde"
+    },
+    {
+        titulo:"POKEMON É VISTO ALEGRE E CANTANDO",
+        subtitulo:"O pokemon oshawott foi visto no hotel BRI BRI BICUS DICUS DEBICUS DEDICUS",
+        conteudo:"Sua alegria se deve à uma troca que realizou na qual pegou 2k de Overpay num perfectly legit, assim, faltando apenas 4.1k para realizar seu sonho de adquirir a catching snowflakes",
+        imagem:"pokemon.jpg",
+        autor:"gustavo.jpg",
+        video:"noticiagustavo.mp4",
+        destaque:true,
+        ad:false,
+        categoria:"Cultura"
+    },
+    {
+        titulo:"ALUNO SETEMBRINO É DESTAQUE NO VÔLEI DE PRAIA",
+        subtitulo:"Atleta garante bons resultados em competições sub-17",
+        conteudo:"Atleta esse que recebeu 0 incentivo do colégio ao esporte devido à falta de estrutura às atividades físicas, demonstrando uma necessidade da escola de melhorar o apoio a atletas.",
+        imagem:"noticiagustavo.jpg",
+        autor:"gustavo.jpg",
+        destaque:true,
+        ad:false,
+        categoria:"Esportes"
+    },
+    {
+        titulo:"Venda de Doces",
+        subtitulo:"Deliciosos doces à venda",
+        conteudo:"Confira os melhores doces produzidos por Sophia!",
+        imagem:"anunciosophia.jpg",
+        autor:"sophia.jpg",
+        destaque:false,
+        ad:true,
+        categoria:"Publicidade"
+    },
+    {
+        titulo:"Venda de Acessórios Masculinos",
+        subtitulo:"Acessórios de qualidade",
+        conteudo:"Compre acessórios masculinos exclusivos.",
+        imagem:"anunciojose.jpg",
+        autor:"jose.jpg",
+        destaque:false,
+        ad:true,
+        categoria:"Publicidade"
+    },
+    {
+        titulo:"Complexo da Cultura Nordestina",
+        subtitulo:"Explore a cultura nordestina",
+        conteudo:"Venha conhecer o complexo cultural e suas atividades.",
+        imagem:"eduardaanuncio.jpg",
+        autor:"eduarda.jpg",
+        destaque:false,
+        ad:true,
+        categoria:"Publicidade"
+    }
 ];
 
-// ==========================
 // FUNÇÕES PARA CARROSSEL E CARDS
 const carouselTrack = document.getElementById("carousel-track");
 const newsCardsContainer = document.getElementById("news-cards");
 const adSpaceContainer = document.getElementById("ad-space");
 
 function carregarItems() {
-    items.forEach(item=>{
+    items.forEach(item => {
         // CARROSSEL (destaques e anúncios)
         if(item.destaque || item.ad){
             const carouselCard = document.createElement("div");
             carouselCard.classList.add("carousel-card");
             if(item.ad) carouselCard.classList.add("ad");
-            carouselCard.innerHTML=`<img src="${item.imagem}" alt="${item.titulo}">
-                                    <img class="author-img" src="${item.autor}" alt="Autor">
-                                    <h3>${item.titulo}</h3>
-                                    <p>${item.subtitulo}</p>`;
-            carouselCard.onclick=()=>abrirModal(item);
+            carouselCard.innerHTML = `
+                <img src="${item.imagem}" alt="${item.titulo}">
+                <img class="author-img" src="${item.autor}" alt="Autor">
+                <h3>${item.titulo}</h3>
+                <p>${item.subtitulo}</p>
+            `;
+            carouselCard.onclick = () => abrirModal(item);
             carouselTrack.appendChild(carouselCard);
         }
 
@@ -217,11 +292,13 @@ function carregarItems() {
         if(!item.ad){
             const card = document.createElement("div");
             card.classList.add("news-card");
-            card.innerHTML=`<img src="${item.imagem}" alt="${item.titulo}">
-                            <img class="author-img" src="${item.autor}" alt="Autor">
-                            <h3>${item.titulo}</h3>
-                            <p>${item.subtitulo}</p>`;
-            card.onclick=()=>abrirModal(item);
+            card.innerHTML = `
+                <img src="${item.imagem}" alt="${item.titulo}">
+                <img class="author-img" src="${item.autor}" alt="Autor">
+                <h3>${item.titulo}</h3>
+                <p>${item.subtitulo}</p>
+            `;
+            card.onclick = () => abrirModal(item);
             newsCardsContainer.appendChild(card);
         }
 
@@ -229,16 +306,17 @@ function carregarItems() {
         if(item.ad){
             const adCard = document.createElement("div");
             adCard.classList.add("ad-card");
-            adCard.innerHTML=`<span class="ad-label">Anúncio</span>
-                              <img src="${item.imagem}" alt="${item.titulo}">
-                              <img class="author-img" src="${item.autor}" alt="Autor">`;
-            adCard.onclick=()=>abrirModal(item);
+            adCard.innerHTML = `
+                <span class="ad-label">Anúncio</span>
+                <img src="${item.imagem}" alt="${item.titulo}">
+                <img class="author-img" src="${item.autor}" alt="Autor">
+            `;
+            adCard.onclick = () => abrirModal(item);
             adSpaceContainer.appendChild(adCard);
         }
     });
 }
 
-// ==========================
 // MODAL
 const modal = document.getElementById("news-modal");
 const closeModalBtn = document.getElementById("close-modal");
@@ -247,6 +325,7 @@ const modalSubtitle = document.getElementById("modal-subtitle");
 const modalImage = document.getElementById("modal-image");
 const modalContentText = document.getElementById("modal-content-text");
 const modalAuthorImg = document.getElementById("modal-author-img");
+const modalVideoContainer = document.getElementById("modal-video-container");
 
 function abrirModal(item){
     modalTitle.textContent = item.titulo;
@@ -254,13 +333,21 @@ function abrirModal(item){
     modalImage.src = item.imagem;
     modalContentText.textContent = item.conteudo;
     modalAuthorImg.src = item.autor?item.autor:'';
+    // Vídeo
+    modalVideoContainer.innerHTML = '';
+    if(item.video){
+        const videoEl = document.createElement('video');
+        videoEl.src = item.video;
+        videoEl.controls = true;
+        videoEl.className = 'modal-video';
+        modalVideoContainer.appendChild(videoEl);
+    }
     modal.style.display = "flex";
 }
 
 closeModalBtn.onclick = ()=>{modal.style.display="none";}
 window.onclick = (e)=>{if(e.target==modal) modal.style.display="none";}
 
-// ==========================
 // CARROSSEL AUTOMÁTICO
 let index = 0;
 function avancarCarrossel(){
@@ -275,4 +362,3 @@ carregarItems();
 </script>
 </body>
 </html>
-
