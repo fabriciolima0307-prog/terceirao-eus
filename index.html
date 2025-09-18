@@ -43,10 +43,10 @@ nav a:hover {color:#ffcdd2;}
 
 /* MAIN CONTENT */
 .main-content {display:flex; max-width:1400px; margin:0 auto 40px auto; gap:20px; padding:0 20px;}
-.news-cards {flex:3; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); grid-auto-rows:minmax(300px, auto); gap:15px;}
+.news-cards {flex:3; display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); grid-auto-rows:auto; gap:15px;}
 .news-card {background:white; border-radius:8px; cursor:pointer; display:flex; flex-direction:column; overflow:hidden; transition:transform 0.3s; position:relative;}
 .news-card:hover {transform:translateY(-5px);}
-.news-card img {width:100%; height:180px; object-fit:cover;}
+.news-card img {width:90%; height:auto; object-fit:cover; margin:10px auto; border-radius:8px;}
 .news-card h3 {color:#b71c1c; margin:10px; font-size:1.1rem;}
 .news-card p {color:#555; margin:0 10px 10px 10px; font-size:0.95rem;}
 .news-card .author-img {width:55px; height:55px; border-radius:50%; position:absolute; top:10px; right:10px; border:2px solid white; object-fit:cover;}
@@ -63,7 +63,7 @@ nav a:hover {color:#ffcdd2;}
 .ad-space {display:flex; flex-direction:column; gap:20px;}
 .ad-card {position:relative; background:#ffe6e6; border:3px solid #b71c1c; border-radius:10px; overflow:hidden; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;}
 .ad-card:hover {transform:scale(1.03); box-shadow:0 10px 20px rgba(0,0,0,0.3);}
-.ad-card img {width:100%; display:block; border-radius:10px; height:150px; object-fit:cover;}
+.ad-card img {width:100%; height:auto; display:block; border-radius:10px;}
 .ad-card .author-img {width:55px; height:55px; border-radius:50%; position:absolute; top:10px; right:10px; border:2px solid white; object-fit:cover;}
 .ad-label {position:absolute; top:10px; left:10px; background:#b71c1c; color:white; font-weight:bold; padding:4px 8px; border-radius:5px; font-size:0.9rem;}
 
@@ -78,8 +78,8 @@ footer a:hover {color:#b71c1c;}
 .modal-content {background:white; margin:20px; padding:20px; border-radius:8px; max-width:900px; width:90%; position:relative; animation:fadeIn 0.3s;}
 .close-modal {position:absolute; top:10px; right:15px; font-size:24px; font-weight:bold; color:#b71c1c; cursor:pointer;}
 #modal-author-img {width:70px; height:70px; border-radius:50%; border:2px solid #b71c1c; margin-bottom:10px; object-fit:cover;}
+#modal-image {width:90%; height:auto; margin:15px auto; display:block; border-radius:8px;}
 .modal-video {width:100%; margin:15px 0; border-radius:8px;}
-.modal-content img {max-height:300px; object-fit:cover; margin:15px 0; width:100%;}
 @keyframes fadeIn {from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
 
 /* RESPONSIVIDADE */
@@ -170,7 +170,7 @@ footer a:hover {color:#b71c1c;}
         <img id="modal-author-img" src="" alt="Autor">
         <h1 id="modal-title"></h1>
         <h3 id="modal-subtitle"></h3>
-        <img id="modal-image" src="" alt="">
+        <img id="modal-image" src="" alt="Imagem da Notícia">
         <div id="modal-video-container"></div>
         <p id="modal-content-text"></p>
     </div>
@@ -188,7 +188,7 @@ const items = [
         titulo:"Cascas de alimentos são reutilizadas para a produção de novos pratos",
         subtitulo:"Alunas do Colégio Sete de Setembro fazem projeto sustentável",
         conteudo:"Todo ano os estudantes são convocados a participar da Amostra Cultural, um tipo de feira de ciências, que possui um tema diferente anualmente. O escolhido de 2025 foi sustentabilidade e a equipe formada por Erika Beserra, Letícia Catarina e Ana Luísa produziram novos 'snacks' e receitas com casca de alimentos que seriam jogadas fora. A proposta tem como objetivo evitar que haja desperdício de frutas/legumes e que tudo seja reaproveitado!",
-        imagem:"noticiaerika.png",
+        imagem:"noticiaerika.jpg",
         autor:"erika.jpg",
         destaque:true,
         ad:false,
@@ -197,7 +197,7 @@ const items = [
     {
         titulo:"Criciúma enfrentará Volta Redonda com elenco completo na 26° rodada do Brasileirão Série B",
         subtitulo:"O jogo ocorrerá sexta feira (12) às 19h",
-        conteudo:"O tigre, não apresenta problemas, mesmo depois de várias rodadas lidando com lesões e suspensões, o técnico Eduardo Baptista terá elenco completo à disposição. O Volta Redonda jogará com o pior ataque da competição, com apenas 16 gols marcados em 25 jogos disputado. Atualmente o time carioca ocupa a 18° posição na tabela.",
+        conteudo:"O tigre, não apresenta problemas, mesmo depois de várias rodadas lidando com lesões e suspensões, o técnico Eduardo Baptista terá elenco completo à disposição. O Volta redonda jogará com o pior ataque da competição, com apenas 16 gols marcados em 25 jogos disputado. Atualmente o time carioca ocupa a 18° posição na tabela.",
         imagem:"noticiarodrigo.jpg",
         autor:"rodrigo.jpg",
         destaque:true,
@@ -230,7 +230,7 @@ const items = [
         conteudo:"Sua alegria se deve à uma troca que realizou na qual pegou 2k de Overpay num perfectly legit, assim, faltando apenas 4.1k para realizar seu sonho de adquirir a catching snowflakes",
         imagem:"pokemon.jpg",
         autor:"gustavo.jpg",
-        video:"noticiagustavo.mp4",
+        video:"https://www.youtube.com/embed/tqreemckTlU?si=Wn46zaHDwr33Pc6h",
         destaque:true,
         ad:false,
         categoria:"Cultura"
@@ -244,6 +244,17 @@ const items = [
         destaque:true,
         ad:false,
         categoria:"Esportes"
+    },
+     {
+        titulo:"Alunos entram para o Guinness Book após alcançarem nota 1000 no Enem",
+        subtitulo:"Após a divulgação das notas relativas à produção textual feita no Enem de 2025, todos os alunos do 3º ano do Colégio 7 de Setembro, Sede Eusébio, alcançaram nota 1000 em suas redações.",
+        conteudo:"Segundo os alunos, além de uma reza braba feita antes da aplicação da prova, esse resultado se deve ao esforço mantido durante todo o ano em suas produções textuais. Os discentes afirmam que, apesar de chorarem toda segunda-feira, quando havia produção textual, perceberam que esse processo resultou em um resultado incrível e a garantia de ingresso na universidade. Um dos estudantes, ao ser indagado se faria tudo novamente para alcançar esse resultado, respondeu: 'Aí não, né. Tá bom já'. As professoras Magna Araújo e Helena Borges, além do Professor Fabrício Lima, acompanharam o processo de aprendizagem dos alunos durante o ano de 2025 e revelaram que, após consulta minuciosa, constataram a perda de 40% dos fios de cabelo, devido ao estresse com as redações incompletas, sem projeto de texto e as letras esculpidas tal qual hieróglifos. No entanto, os profissionais afirmaram ter um grande apreço e carinho pelos alunos da turma e uma enorme satisfação de acompanhá-los durante o período do ano que antecedeu a prova do Enem. Por fim, o professor Fabrício findou a sua colaboração aos prantos por constatar que, em 2026, não terá a companhia do Terceirão 2025, mas se comprometeu a se recuperar após ingerir um comprimido, tarja preta, de Diazepam."
+,
+        imagem:"noticiafabricio.jpg",
+        autor:"fabricio.jpg",
+        destaque:true,
+        ad:false,
+        categoria:"Educação"
     },
     {
         titulo:"Venda de Doces",
@@ -318,9 +329,9 @@ function carregarItems() {
             const adCard = document.createElement("div");
             adCard.classList.add("ad-card");
             adCard.innerHTML = `
-                <span class="ad-label">Anúncio</span>
                 <img src="${item.imagem}" alt="${item.titulo}">
                 <img class="author-img" src="${item.autor}" alt="Autor">
+                <div class="ad-label">ANÚNCIO</div>
                 <h3>${item.titulo}</h3>
                 <p>${item.subtitulo}</p>
             `;
@@ -335,32 +346,54 @@ const modal = document.getElementById("news-modal");
 const closeModalBtn = document.getElementById("close-modal");
 const modalTitle = document.getElementById("modal-title");
 const modalSubtitle = document.getElementById("modal-subtitle");
-const modalImage = document.getElementById("modal-image");
-const modalVideoContainer = document.getElementById("modal-video-container");
-const modalContentText = document.getElementById("modal-content-text");
 const modalAuthorImg = document.getElementById("modal-author-img");
+const modalContentText = document.getElementById("modal-content-text");
+const modalVideoContainer = document.getElementById("modal-video-container");
+const modalImage = document.getElementById("modal-image");
 
 function abrirModal(item){
     modalTitle.textContent = item.titulo;
     modalSubtitle.textContent = item.subtitulo;
-    modalImage.src = item.imagem || "";
-    modalAuthorImg.src = item.autor || "";
+    modalAuthorImg.src = item.autor ? item.autor : '';
     modalContentText.textContent = item.conteudo;
-    modalVideoContainer.innerHTML = "";
+
+    // Atualiza a imagem da notícia
+    modalImage.src = item.imagem ? item.imagem : '';
+    modalImage.style.display = item.imagem ? "block" : "none";
+
+    // Limpa o container do vídeo
+    modalVideoContainer.innerHTML = '';
+
+    // Se item.video existir, cria iframe do YouTube
     if(item.video){
-        const video = document.createElement("video");
-        video.src = item.video;
-        video.controls = true;
-        video.classList.add("modal-video");
-        modalVideoContainer.appendChild(video);
+        const iframe = document.createElement('iframe');
+        iframe.width = '100%';
+        iframe.height = '315';
+        iframe.src = item.video;
+        iframe.title = "YouTube video player";
+        iframe.frameBorder = '0';
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+        iframe.allowFullscreen = true;
+        modalVideoContainer.appendChild(iframe);
     }
+
     modal.style.display = "flex";
 }
-closeModalBtn.onclick = ()=>{modal.style.display="none";}
-window.onclick = (e)=>{if(e.target==modal){modal.style.display="none";}}
 
-// INICIAR
+closeModalBtn.onclick = ()=> modal.style.display = "none";
+window.onclick = (e)=> {if(e.target==modal){modal.style.display="none";}}
+
+// CARROSSEL AUTOMÁTICO
+let index = 0;
+setInterval(()=>{
+    if(carouselTrack.children.length>0){
+        index = (index+1) % carouselTrack.children.length;
+        carouselTrack.style.transform = `translateX(-${index*100}%)`;
+    }
+},5000);
+
 carregarItems();
 </script>
+
 </body>
 </html>
